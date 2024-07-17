@@ -1,4 +1,4 @@
-import { Home, LayoutGrid, Rocket, Settings, User } from "lucide-react";
+import { Contact, Contact2, ContactIcon, History, Home, LayoutGrid, Phone, Rocket, Settings, TrendingUp, User } from "lucide-react";
 
 export default[
     {
@@ -9,21 +9,21 @@ export default[
     },
     {
         id:2,
-        name:'Community',
-        path:'/community',
-        icon:Rocket
+        name:'History',
+        path:'/history',
+        icon:History
     },
     {
         id:3,
-        name:'Tools',
-        path:'/tool',
-        icon:LayoutGrid
+        name:'Trending',
+        path:'/trending',
+        icon:TrendingUp
     },
     {
         id:4,
-        name:'Settings',
-        path:'/settings',
-        icon:Settings
+        name:'Contact Us',
+        path:'/contact',
+        icon:Phone
     },
     {
         id:5,
