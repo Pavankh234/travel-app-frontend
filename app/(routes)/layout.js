@@ -37,6 +37,51 @@
 // }
 
 // export default layout
+
+// "use client"
+// import React, { useState } from 'react'
+// import SideNav from './_components/SideNav'
+// import Header from './_components/Header'
+
+// function Layout({ children }) {
+//   const [toggleSideBar, setToggleSideBar] = useState(true)
+//   return (
+//     <div className="flex flex-col min-h-screen">
+
+//       {/* Header */}
+//       <Header toggleSideBar={() => setToggleSideBar(true)} />
+
+//       <div className="flex flex-grow">
+
+//         {/* This side bar used when screen size is medium or larger */}
+//         <div className='hidden md:block md:w-60'>
+//           <SideNav />
+//         </div>
+
+//         {/* This side bar used when screen size is smaller/mobile */}
+//         {toggleSideBar &&
+//           <div className='bg-white absolute md:hidden w-full h-screen animate-in duration-700'>
+//             <SideNav toggleSideBar={() => setToggleSideBar(false)} />
+//           </div>}
+
+//         {/* Main Content */}
+//         <div className='flex-grow'>
+//           <div className='p-4'>
+//             {children}
+//           </div>
+//         </div>
+
+//       </div>
+
+
+//     </div>
+//   )
+// }
+
+// export default Layout
+
+
+// app/layout.js
 "use client"
 import React, { useState } from 'react'
 import SideNav from './_components/SideNav'
@@ -44,14 +89,13 @@ import Header from './_components/Header'
 
 function Layout({ children }) {
   const [toggleSideBar, setToggleSideBar] = useState(true)
+
   return (
     <div className="flex flex-col min-h-screen">
-
       {/* Header */}
       <Header toggleSideBar={() => setToggleSideBar(true)} />
 
-      <div className="flex flex-grow">
-
+      <div className="flex flex-grow mt-16 md:mt-0"> {/* Adjust the top margin to avoid overlap */}
         {/* This side bar used when screen size is medium or larger */}
         <div className='hidden md:block md:w-60'>
           <SideNav />
@@ -64,15 +108,12 @@ function Layout({ children }) {
           </div>}
 
         {/* Main Content */}
-        <div className='flex-grow'>
-          <div className='p-4'>
+        <div className='flex-grow ml-60 md:ml-0'> {/* Adjust the left margin to avoid overlap */}
+          <div className='p-5'>
             {children}
           </div>
         </div>
-
       </div>
-
-
     </div>
   )
 }

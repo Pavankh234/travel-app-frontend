@@ -7,9 +7,9 @@ import SearchComponent from './_components/SearchComponent'
 function Home() {
   const { user } = useUser()
   return (
-    <div className='p-5'>
+    <div className='p-5 pt-20'>
       {!user ? <Banner /> : null}
-      <SearchComponent />
+      {user ? <SearchComponent /> : null}
     </div>
   )
 }
