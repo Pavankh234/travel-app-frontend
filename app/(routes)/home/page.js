@@ -1,3 +1,5 @@
+
+
 "use client"
 import React from 'react'
 import Banner from './_components/Banner'
@@ -9,9 +11,9 @@ function Home() {
   return (
     <div className='p-5'>
       {!user ? <Banner /> : null}
-      <SearchComponent />
+      {user ? <SearchComponent /> : null}
     </div>
   )
 }
-
 export default Home
+
