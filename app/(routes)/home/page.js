@@ -1,3 +1,5 @@
+
+
 "use client"
 import React from 'react'
 import Banner from './_components/Banner'
@@ -13,5 +15,5 @@ function Home() {
     </div>
   )
 }
-
 export default Home
+
