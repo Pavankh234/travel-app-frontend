@@ -57,7 +57,7 @@ import React from 'react'
 function SideNav({ toggleSideBar }) {
   const { user } = useUser()
   return (
-    <div className='fixed top-0 left-0 h-full p-5 bg-gray-900 text-gray-300 w-60 z-40'>
+    <div className='fixed mt-10 top-0 left-0 h-full p-5 bg-gray-900 text-gray-300 w-60 z-40'>
       <div className='flex flex-col mt-16'>
         {MenuList.map((item, index) => (
           <Link href={item.path} key={index} onClick={() => toggleSideBar(false)}>
@@ -80,7 +80,7 @@ function SideNav({ toggleSideBar }) {
             </Button>
           </Link>
         ) : (
-          <div className='flex items-center gap-3'>
+          <div className='flex items-center gap-3 mb-10'>
             <UserButton afterSignOutUrl='/home' />
             <span>Profile</span>
           </div>
