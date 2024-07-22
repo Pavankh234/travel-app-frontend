@@ -87,12 +87,14 @@ import React, { useState } from 'react'
 import SideNav from './_components/SideNav'
 import Header from './_components/Header'
 
+
 function Layout({ children }) {
   const [toggleSideBar, setToggleSideBar] = useState(true)
 
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header */}
+      
       <Header toggleSideBar={() => setToggleSideBar(true)} />
 
       <div className="flex flex-grow mt-16 md:mt-0"> {/* Adjust the top margin to avoid overlap */}
