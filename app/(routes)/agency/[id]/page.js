@@ -1,9 +1,12 @@
-"use client"
+
+
+"use client";
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { ToastContainer, toast } from 'react-toastify';
+import { useUser } from '@clerk/nextjs';
 import 'react-toastify/dist/ReactToastify.css';
 
 const vehicleImages = {
@@ -17,8 +20,10 @@ const vehicleImages = {
 
 const TravelAgencyDetailPage = () => {
     const { id } = useParams();
+    const { user } = useUser();
     const [agency, setAgency] = useState(null);
-    const [bookings, setBookings] = useState({}); // To store booking quantities
+    const [bookings, setBookings] = useState({});
+    const [userId, setUserId] = useState(null);
 
     useEffect(() => {
         async function fetchAgency() {
@@ -34,19 +39,39 @@ const TravelAgencyDetailPage = () => {
         fetchAgency();
     }, [id]);
 
+    useEffect(() => {
+        async function fetchUser() {
+            if (user && user.emailAddresses.length > 0) {
+                const email = user.emailAddresses[0].emailAddress; // Extract email address
+
+                try {
+                    const response = await fetch(`http://localhost:8000/user/by-email/${email}`);
+                    const data = await response.json();
+                    setUserId(data._id);
+                } catch (error) {
+                    console.error('Error fetching user details:', error);
+                }
+            }
+        }
+
+        fetchUser();
+    }, [user]);
+
     const handleBookingChange = (type, value) => {
         setBookings(prev => ({ ...prev, [type]: value }));
     };
 
     const handleBookingSubmit = async (type) => {
         const quantity = bookings[type] || 0;
-        if (quantity <= 0) return;
-    
-        // Assuming you have the user's ID and location in your component's state or props
-        const userId = '66974795e579adf60e07dfd1'; // Replace with actual user ID
-        const location = agency.Location; // Location from the agency details
-    
+        if (quantity <= 0 || !userId) return;
+
+        const location = agency.Location;
+
+        console.log(location)
+        console.log(userId)
+
         try {
+            // to handle booking db and to reduce the count of vehicle
             const response = await fetch(`http://localhost:8000/api/travel-agencies/book/${id}`, {
                 method: 'POST',
                 headers: {
@@ -55,7 +80,7 @@ const TravelAgencyDetailPage = () => {
                 body: JSON.stringify({ type, quantity, userId, location }),
             });
             const data = await response.json();
-    
+
             if (data.success) {
                 toast.success('Booking confirmed!');
                 // Reload the page after a short delay to ensure the toast shows first
@@ -69,14 +94,13 @@ const TravelAgencyDetailPage = () => {
             toast.error('Error during booking');
         }
     };
-    
 
     if (!agency) {
         return <p>Loading...</p>;
     }
 
     return (
-        <div className="min-h-screen bg-gray-100 p-6 pt-20">
+        <div className="min-h-screen bg-gray-100 p-6 pt-20 pl-10">
             <div className="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-lg flex">
                 <div className="flex-shrink-0 w-1/3 relative h-64">
                     {agency.Image && (

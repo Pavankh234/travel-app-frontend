@@ -25,7 +25,7 @@ const{user}=useUser();
 
     // return (
     // <div>
-    // <UserButton afterSignOutUrl="/home"/>
+    // <UserButton />
     // </div>
     // )
 

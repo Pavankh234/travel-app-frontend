@@ -89,6 +89,11 @@ import Banner from './_components/Banner';
 import { useUser } from '@clerk/nextjs';
 import SearchComponent from './_components/SearchComponent';
 import Trending from './_components/Trending';
+import { useEffect } from 'react';
+import GlobalApi from '../../_utils/GlobalApi';
+import { UserButton } from '@clerk/nextjs';
+
+
 
 const fetchSearchedLocation = async (query) => {
   try {
@@ -108,6 +113,23 @@ const fetchSearchedLocation = async (query) => {
 
 function Home() {
   const { user } = useUser();
+  
+
+    useEffect(()=>{
+      user&&createuserprofile();
+    },[user])
+
+    const createuserprofile=()=>{
+      const data={
+        name:user.fullName,
+        email:user.primaryEmailAddress.emailAddress,
+        image:user.imageUrl
+      }
+      GlobalApi.createUser(data).then(res=>{
+      console.log(res.data);
+      })
+    }
+    
   const [searchResults, setSearchResults] = useState(null);
   const [clickedHearts, setClickedHearts] = useState({});
   const router = useRouter(); // Initialize the useRouter hook
@@ -156,6 +178,7 @@ function Home() {
   };
 
   return (
+
     <div className='p-5 pt-20'>
       {!user ? <Banner /> : null}
       {user ? (
